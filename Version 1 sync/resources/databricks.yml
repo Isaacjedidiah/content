@@ -1,0 +1,102 @@
+# Databricks Asset Bundle for the DocExtract document data product.
+# Deploy:  databricks bundle deploy -t dev
+# Run:     databricks bundle run docextract_ingestion -t dev
+#
+# Adjust host, catalog, and cluster settings to your Azure workspace.
+
+bundle:
+  name: docextract
+
+variables:
+  catalog:
+    default: docextract
+  volume_root:
+    default: /Volumes/docextract/landing/submissions
+  node_type_id:
+    default: Standard_DS3_v2
+  spark_version:
+    default: "15.4.x-scala2.12"
+
+# Build the wheel as part of `bundle deploy` so tasks have a concrete artifact
+# to install (rather than relying on a pre-built glob path).
+artifacts:
+  docextract_wheel:
+    type: whl
+    build: python -m build --wheel
+    path: .
+
+targets:
+  dev:
+    mode: development
+    default: true
+    workspace:
+      host: https://adb-XXXXXXXXXXXX.azuredatabricks.net
+  prod:
+    mode: production
+    workspace:
+      host: https://adb-XXXXXXXXXXXX.azuredatabricks.net
+
+resources:
+  jobs:
+    docextract_ingestion:
+      name: DocExtract Ingestion (custom track)
+      # Three linear tasks, mirroring a Databricks Jobs DAG:
+      #   ingest_documents ──▶ index_to_search ──▶ run_health_check
+      # Each is a python_wheel_task pointing at an entry_point in pyproject.
+      # depends_on wires the left-to-right flow; a failed task shows red in the
+      # Jobs graph and can be re-run on its own without re-running upstream.
+      job_clusters:
+        - job_cluster_key: docextract_cluster
+          new_cluster:
+            spark_version: ${var.spark_version}
+            node_type_id: ${var.node_type_id}
+            num_workers: 2
+      tasks:
+        - task_key: ingest_documents
+          job_cluster_key: docextract_cluster
+          python_wheel_task:
+            package_name: docextract
+            entry_point: ingest_documents      # workflow_tasks:ingest_task
+            parameters: ["--root", "${var.volume_root}"]
+          libraries:
+            - whl: ${artifacts.docextract_wheel.path}
+
+        - task_key: index_to_search
+          job_cluster_key: docextract_cluster
+          depends_on:
+            - task_key: ingest_documents
+          python_wheel_task:
+            package_name: docextract
+            entry_point: index_to_search       # workflow_tasks:index_task
+            parameters: ["--root", "${var.volume_root}"]
+          libraries:
+            - whl: ${artifacts.docextract_wheel.path}
+
+        - task_key: run_health_check
+          job_cluster_key: docextract_cluster
+          depends_on:
+            - task_key: index_to_search
+          python_wheel_task:
+            package_name: docextract
+            entry_point: run_health_check      # workflow_tasks:healthcheck_task
+          libraries:
+            - whl: ${artifacts.docextract_wheel.path}
+
+      schedule:
+        quartz_cron_expression: "0 0 6 * * ?"
+        timezone_id: Europe/London
+      # Notify on failure so a red task actually reaches someone.
+      email_notifications:
+        on_failure: ["EDIT_ME@yourorg.example"]
+
+  pipelines:
+    docextract_native_medallion:
+      name: DocExtract Native Medallion (Lakeflow)
+      catalog: ${var.catalog}
+      target: silver
+      libraries:
+        - file:
+            path: ../docextract/native/native_pipeline.py
+      configuration:
+        volume_root: ${var.volume_root}
+      continuous: false

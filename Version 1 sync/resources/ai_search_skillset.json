@@ -1,0 +1,23 @@
+{
+  "_comment": "Skillset for the 'I chunk, AI Search embeds' model. Because chunking is done upstream (in the pipeline) and chunks are pushed to the index, this skillset contains ONLY an embedding skill — no Text Split / chunking skill. It embeds the pushed 'content' field into 'content_vector'. Attach this to an indexer whose data source is the index's own pushed documents, OR use the equivalent AzureOpenAIEmbedding skill inline. Deploy with the 2024-07-01 (or later) API version. Replace {AOAI_RESOURCE_URI} and {EMBEDDING_DEPLOYMENT}.",
+  "name": "reg-embed-skillset",
+  "description": "Embed pre-chunked regulatory content pushed by the pipeline. No chunking skill: chunking is owned by the caller.",
+  "skills": [
+    {
+      "@odata.type": "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill",
+      "name": "embed-content",
+      "description": "text-embedding-3-large @ 3072 dims",
+      "context": "/document",
+      "resourceUri": "{AOAI_RESOURCE_URI}",
+      "deploymentId": "{EMBEDDING_DEPLOYMENT}",
+      "modelName": "text-embedding-3-large",
+      "dimensions": 3072,
+      "inputs": [
+        { "name": "text", "source": "/document/content" }
+      ],
+      "outputs": [
+        { "name": "embedding", "targetName": "content_vector" }
+      ]
+    }
+  ]
+}
