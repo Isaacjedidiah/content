@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1360" height="1240"
+     viewBox="0 0 1360 1240" font-family="Helvetica,Arial,sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7"
+            markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8a93a3"/>
+    </marker>
+  </defs>
+  <rect width="1360" height="1240" fill="#ffffff"/>
+  <text x="40" y="28" font-size="21" font-weight="700" fill="#1a1a1a">DocExtract — system map: the five flows around the pipeline</text>
+  <rect x="40" y="40" width="1280" height="120" rx="10" fill="#d7ecd9" fill-opacity="0.25" stroke="#2f7d32" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="54" y="62" font-size="13" font-weight="700" fill="#2f7d32">1 · WORKFLOW WRAPPER  —  what Databricks Jobs runs</text>
+  <rect x="40" y="190" width="1280" height="250" rx="10" fill="#eef2f7" fill-opacity="0.25" stroke="#3763a6" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="54" y="212" font-size="13" font-weight="700" fill="#3763a6">2 · CUSTOM INGESTION  —  per-document path (see module_flow.svg)</text>
+  <rect x="40" y="470" width="1280" height="190" rx="10" fill="#eae7f6" fill-opacity="0.25" stroke="#5b3fa6" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="54" y="492" font-size="13" font-weight="700" fill="#5b3fa6">3 · NATIVE TRACK  —  alternative engine (Lakeflow + ai_* functions)</text>
+  <rect x="40" y="690" width="1280" height="190" rx="10" fill="#e6f2f0" fill-opacity="0.25" stroke="#1f7d6d" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="54" y="712" font-size="13" font-weight="700" fill="#1f7d6d">4 · SUPERVISOR CHAT  —  separate entry (a question, not a doc) · now with memory + audit + feedback</text>
+  <rect x="40" y="910" width="1280" height="150" rx="10" fill="#f7efe0" fill-opacity="0.25" stroke="#a6781f" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="54" y="932" font-size="13" font-weight="700" fill="#a6781f">5 · HUMAN REVIEW  —  async, triggered by a person</text>
+  <rect x="40" y="1090" width="1280" height="120" rx="10" fill="#f4eef0" fill-opacity="0.25" stroke="#a63763" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="54" y="1112" font-size="13" font-weight="700" fill="#a63763">6 · CROSS-CUTTING  —  wrap the pipeline, not a stage in it</text>
+  <path d="M320,105 L520,105" fill="none" stroke="#8a93a3" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <path d="M770,105 L950,105" fill="none" stroke="#8a93a3" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <path d="M320,265 L360,265" fill="none" stroke="#8a93a3" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <path d="M185,292 L185,312" fill="none" stroke="#8a93a3" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <path d="M475,292 L475,312" fill="none" stroke="#8a93a3" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <path d="M300,339 L360,339" fill="none" stroke="#8a93a3" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <path d="M650,339 L780,339" fill="none" stroke="#8a93a3" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <path d="M185,366 L185,386" fill="none" stroke="#8a93a3" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <path d="M475,366 L475,386" fill="none" stroke="#8a93a3" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <path d="M650,413 L780,413" fill="none" stroke="#8a93a3" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <path d="M320,547 L470,547" fill="none" stroke="#8a93a3" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <path d="M700,547 L700,594" fill="none" stroke="#8a93a3" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <path d="M720,621 L900,621" fill="none" stroke="#8a93a3" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <path d="M320,767 L470,767" fill="none" stroke="#8a93a3" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <path d="M300,841 L470,841" fill="none" stroke="#8a93a3" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <path d="M830,767 L900,767" fill="none" stroke="#8a93a3" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <path d="M510,985 L560,985" fill="none" stroke="#8a93a3" stroke-width="1.8" marker-end="url(#arrow)"/>
+  <g>
+    <rect x="70" y="78" width="306" height="54" rx="7" fill="#d7ecd9" stroke="#2f7d32" stroke-width="2"/>
+    <rect x="70" y="78" width="5" height="54" rx="2.5" fill="#2f7d32"/>
+    <text x="84" y="100" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">workflow_tasks.py : ingest_task</text>
+    <text x="84" y="118" font-size="11" fill="#444">discover → process_batch (contains lane 2)</text>
+  </g>
+  <g>
+    <rect x="520" y="78" width="240" height="54" rx="7" fill="#d7ecd9" stroke="#2f7d32" stroke-width="2"/>
+    <rect x="520" y="78" width="5" height="54" rx="2.5" fill="#2f7d32"/>
+    <text x="534" y="100" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">workflow_tasks.py : index_task</text>
+    <text x="534" y="118" font-size="11" fill="#444">push chunks → AI Search</text>
+  </g>
+  <g>
+    <rect x="950" y="78" width="264" height="54" rx="7" fill="#d7ecd9" stroke="#2f7d32" stroke-width="2"/>
+    <rect x="950" y="78" width="5" height="54" rx="2.5" fill="#2f7d32"/>
+    <text x="964" y="100" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">workflow_tasks.py : healthcheck_task</text>
+    <text x="964" y="118" font-size="11" fill="#444">fail red if run abnormal</text>
+  </g>
+  <g>
+    <rect x="70" y="238" width="240" height="54" rx="7" fill="#eef2f7" stroke="#3763a6" stroke-width="2"/>
+    <rect x="70" y="238" width="5" height="54" rx="2.5" fill="#3763a6"/>
+    <text x="84" y="260" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">run_ingestion_job.py</text>
+    <text x="84" y="278" font-size="11" fill="#444">discover_submissions()</text>
+  </g>
+  <g>
+    <rect x="360" y="238" width="240" height="54" rx="7" fill="#eef2f7" stroke="#3763a6" stroke-width="2"/>
+    <rect x="360" y="238" width="5" height="54" rx="2.5" fill="#3763a6"/>
+    <text x="374" y="260" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">production.py</text>
+    <text x="374" y="278" font-size="11" fill="#444">process_batch() orchestrates:</text>
+  </g>
+  <g>
+    <rect x="70" y="312" width="250" height="54" rx="7" fill="#eef2f7" stroke="#3763a6" stroke-width="2"/>
+    <rect x="70" y="312" width="5" height="54" rx="2.5" fill="#3763a6"/>
+    <text x="84" y="334" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">preprocessor.py (+ai_parse_client)</text>
+    <text x="84" y="352" font-size="11" fill="#444">file → Elements</text>
+  </g>
+  <g>
+    <rect x="360" y="312" width="362" height="54" rx="7" fill="#eef2f7" stroke="#3763a6" stroke-width="2"/>
+    <rect x="360" y="312" width="5" height="54" rx="2.5" fill="#3763a6"/>
+    <text x="374" y="334" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">extractor.py</text>
+    <text x="374" y="352" font-size="11" fill="#444">Element → Claim (routing, figure, llm, dict, norm)</text>
+  </g>
+  <g>
+    <rect x="780" y="312" width="240" height="54" rx="7" fill="#eef2f7" stroke="#3763a6" stroke-width="2"/>
+    <rect x="780" y="312" width="5" height="54" rx="2.5" fill="#3763a6"/>
+    <text x="794" y="334" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">validator.py</text>
+    <text x="794" y="352" font-size="11" fill="#444">reconcile + gate_for_review</text>
+  </g>
+  <g>
+    <rect x="70" y="386" width="240" height="54" rx="7" fill="#eef2f7" stroke="#3763a6" stroke-width="2"/>
+    <rect x="70" y="386" width="5" height="54" rx="2.5" fill="#3763a6"/>
+    <text x="84" y="408" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">claim_quant_matcher.py</text>
+    <text x="84" y="426" font-size="11" fill="#444">claim → metric</text>
+  </g>
+  <g>
+    <rect x="360" y="386" width="243" height="54" rx="7" fill="#eef2f7" stroke="#3763a6" stroke-width="2"/>
+    <rect x="360" y="386" width="5" height="54" rx="2.5" fill="#3763a6"/>
+    <text x="374" y="408" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">storage.py</text>
+    <text x="374" y="426" font-size="11" fill="#444">Silver / Gold per team_reporttype</text>
+  </g>
+  <g>
+    <rect x="780" y="386" width="240" height="54" rx="7" fill="#f7e8e8" stroke="#a63737" stroke-width="2"/>
+    <rect x="780" y="386" width="5" height="54" rx="2.5" fill="#a63737"/>
+    <text x="794" y="408" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">ai_search_store.py</text>
+    <text x="794" y="426" font-size="11" fill="#444">index conflict / claim chunks</text>
+  </g>
+  <g>
+    <rect x="70" y="520" width="240" height="54" rx="7" fill="#eae7f6" stroke="#5b3fa6" stroke-width="2"/>
+    <rect x="70" y="520" width="5" height="54" rx="2.5" fill="#5b3fa6"/>
+    <text x="84" y="542" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">ai_functions_config.py</text>
+    <text x="84" y="560" font-size="11" fill="#444">endpoints + extract schema</text>
+  </g>
+  <g>
+    <rect x="470" y="520" width="334" height="54" rx="7" fill="#eae7f6" stroke="#5b3fa6" stroke-width="2"/>
+    <rect x="470" y="520" width="5" height="54" rx="2.5" fill="#5b3fa6"/>
+    <text x="484" y="542" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">native_pipeline.py</text>
+    <text x="484" y="560" font-size="11" fill="#444">Lakeflow Bronze→Silver→Gold (ai_parse/extract)</text>
+  </g>
+  <g>
+    <rect x="470" y="594" width="240" height="54" rx="7" fill="#eae7f6" stroke="#5b3fa6" stroke-width="2"/>
+    <rect x="470" y="594" width="5" height="54" rx="2.5" fill="#5b3fa6"/>
+    <text x="484" y="616" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">vector_sync.py</text>
+    <text x="484" y="634" font-size="11" fill="#444">Delta Gold → AI Search</text>
+  </g>
+  <g>
+    <rect x="900" y="594" width="240" height="54" rx="7" fill="#f7e8e8" stroke="#a63737" stroke-width="2"/>
+    <rect x="900" y="594" width="5" height="54" rx="2.5" fill="#a63737"/>
+    <text x="914" y="616" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">ai_search_store.py</text>
+    <text x="914" y="634" font-size="11" fill="#444">(shared with custom track)</text>
+  </g>
+  <g>
+    <rect x="70" y="740" width="240" height="54" rx="7" fill="#e6f2f0" stroke="#1f7d6d" stroke-width="2"/>
+    <rect x="70" y="740" width="5" height="54" rx="2.5" fill="#1f7d6d"/>
+    <text x="84" y="762" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">supervisor_app.py</text>
+    <text x="84" y="780" font-size="11" fill="#444">a supervisor asks a question</text>
+  </g>
+  <g>
+    <rect x="470" y="740" width="285" height="54" rx="7" fill="#e6f2f0" stroke="#1f7d6d" stroke-width="2"/>
+    <rect x="470" y="740" width="5" height="54" rx="2.5" fill="#1f7d6d"/>
+    <text x="484" y="762" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">llm_router.py : answer(session)</text>
+    <text x="484" y="780" font-size="11" fill="#444">resolve refs → classify → SQL/narrative</text>
+  </g>
+  <g>
+    <rect x="900" y="740" width="240" height="54" rx="7" fill="#e6f2f0" stroke="#1f7d6d" stroke-width="2"/>
+    <rect x="900" y="740" width="5" height="54" rx="2.5" fill="#1f7d6d"/>
+    <text x="914" y="762" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">supervisor_session.py</text>
+    <text x="914" y="780" font-size="11" fill="#444">memory + audit log + feedback</text>
+  </g>
+  <g>
+    <rect x="70" y="814" width="240" height="54" rx="7" fill="#e6f2f0" stroke="#1f7d6d" stroke-width="2"/>
+    <rect x="70" y="814" width="5" height="54" rx="2.5" fill="#1f7d6d"/>
+    <text x="84" y="836" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">prompt_registry.py</text>
+    <text x="84" y="854" font-size="11" fill="#444">team/report_type query few-shots</text>
+  </g>
+  <g>
+    <rect x="470" y="814" width="240" height="54" rx="7" fill="#f7e8e8" stroke="#a63737" stroke-width="2"/>
+    <rect x="470" y="814" width="5" height="54" rx="2.5" fill="#a63737"/>
+    <text x="484" y="836" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">ai_search_store.py : search()</text>
+    <text x="484" y="854" font-size="11" fill="#444">narrative retrieval</text>
+  </g>
+  <g>
+    <rect x="70" y="958" width="278" height="54" rx="7" fill="#f7efe0" stroke="#a6781f" stroke-width="2"/>
+    <rect x="70" y="958" width="5" height="54" rx="2.5" fill="#a6781f"/>
+    <text x="84" y="980" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">gate_for_review (lane 2) flags a claim</text>
+    <text x="84" y="998" font-size="11" fill="#444">→ needs_review</text>
+  </g>
+  <g>
+    <rect x="560" y="958" width="306" height="54" rx="7" fill="#f7efe0" stroke="#a6781f" stroke-width="2"/>
+    <rect x="560" y="958" width="5" height="54" rx="2.5" fill="#a6781f"/>
+    <text x="574" y="980" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">reviewer.py : apply_decision()</text>
+    <text x="574" y="998" font-size="11" fill="#444">human approve / override → promote to Gold</text>
+  </g>
+  <g>
+    <rect x="70" y="1128" width="240" height="54" rx="7" fill="#f4eef0" stroke="#a63763" stroke-width="2"/>
+    <rect x="70" y="1128" width="5" height="54" rx="2.5" fill="#a63763"/>
+    <text x="84" y="1150" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">audit_log.py</text>
+    <text x="84" y="1168" font-size="11" fill="#444">per-event trace</text>
+  </g>
+  <g>
+    <rect x="370" y="1128" width="240" height="54" rx="7" fill="#f4eef0" stroke="#a63763" stroke-width="2"/>
+    <rect x="370" y="1128" width="5" height="54" rx="2.5" fill="#a63763"/>
+    <text x="384" y="1150" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">monitoring.py</text>
+    <text x="384" y="1168" font-size="11" fill="#444">aggregate KPIs / drift</text>
+  </g>
+  <g>
+    <rect x="670" y="1128" width="240" height="54" rx="7" fill="#f4eef0" stroke="#a63763" stroke-width="2"/>
+    <rect x="670" y="1128" width="5" height="54" rx="2.5" fill="#a63763"/>
+    <text x="684" y="1150" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">cost_tracker.py</text>
+    <text x="684" y="1168" font-size="11" fill="#444">spend projection vs actual</text>
+  </g>
+  <g>
+    <rect x="970" y="1128" width="240" height="54" rx="7" fill="#f4eef0" stroke="#a63763" stroke-width="2"/>
+    <rect x="970" y="1128" width="5" height="54" rx="2.5" fill="#a63763"/>
+    <text x="984" y="1150" font-family="monospace" font-size="12.5" font-weight="700" fill="#1a1a1a">gates.py</text>
+    <text x="984" y="1168" font-size="11" fill="#444">release / deploy sign-off</text>
+  </g>
+</svg>
