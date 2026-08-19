@@ -1,0 +1,28 @@
+# Core
+pydantic>=2.6,<3
+openai>=1.30           # OpenAI-compatible client for Databricks serving endpoints
+
+# Azure AI Search + auth (query-time vectorization, push indexing)
+azure-search-documents>=11.6.0b4   # integrated-vectorization / vectorizer support
+azure-identity>=1.16               # DefaultAzureCredential (managed identity / Entra ID)
+azure-core>=1.30
+
+# Preprocessing (document parsing)
+pdfplumber>=0.11
+Pillow>=10.0            # page.to_image() rendering for the OCR fallback path
+python-docx>=1.1
+openpyxl>=3.1
+
+# SQL safety (SELECT-only guard). Optional: code falls back to regex if absent.
+sqlparse>=0.5
+
+# Apps
+streamlit>=1.36
+
+# Dev / test
+pytest>=8.0
+
+# Notes:
+# - On Databricks, spark/dbutils/dlt are provided by the runtime — do NOT pin.
+# - Embeddings are performed BY Azure AI Search (skillset + vectorizer); no
+#   embedding SDK is required in this package.

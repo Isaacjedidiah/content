@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "docextract"
+version = "0.2.0"
+description = "the pipeline Regulatory Data Product — extraction pipeline (Azure Databricks + Azure AI Search)"
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic>=2.6,<3",
+    "openai>=1.30",
+    "databricks-ai-search",
+    "pdfplumber>=0.11",
+    "Pillow>=10.0",
+    "python-docx>=1.1",
+    "openpyxl>=3.1",
+    "python-pptx>=0.6.23",
+    "sqlparse>=0.5",
+]
+
+[project.optional-dependencies]
+apps = ["streamlit>=1.36"]
+dev = ["pytest>=8.0"]
+msg = ["extract-msg>=0.48"]  # optional: only needed to read Outlook .msg files
+
+[project.entry-points."databricks"]
+ingest = "docextract.custom.run_ingestion_job:main"
+ingest_documents = "docextract.custom.workflow_tasks:ingest_task"
+index_to_search = "docextract.custom.workflow_tasks:index_task"
+run_health_check = "docextract.custom.workflow_tasks:healthcheck_task"
+
+[project.scripts]
+docextract-ingest = "docextract.custom.run_ingestion_job:main"
+docextract-ingest-documents = "docextract.custom.workflow_tasks:ingest_task"
+docextract-index-to-search = "docextract.custom.workflow_tasks:index_task"
+docextract-health-check = "docextract.custom.workflow_tasks:healthcheck_task"
+
+[tool.setuptools.packages.find]
+include = ["docextract*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+# E/F = pyflakes+pycodestyle, I = import sorting, B = bugbear, UP = pyupgrade
+select = ["E", "F", "I", "B", "UP"]
+# The sandbox pydantic shim and Databricks-only names (dbutils, spark) aren't
+# resolvable at lint time; ignore undefined-name there rather than failing CI.
+ignore = ["E501"]  # line length handled by formatter, not enforced hard
+
+[tool.ruff.lint.per-file-ignores]
+# native_pipeline runs inside Databricks where dlt/spark are injected globals
+"docextract/native/native_pipeline.py" = ["F821"]
+"docextract/custom/workflow_tasks.py" = ["F821"]  # dbutils
